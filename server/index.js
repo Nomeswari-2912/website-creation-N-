@@ -39,7 +39,7 @@ if (smtpConfigured) {
     console.warn('SMTP configuration is invalid:', err.message || err);
   });
 } else {
-  console.log('SMTP is not configured. Contact form submissions will be saved but email delivery will not occur.');
+  console.log('SMTP is not configured. Contact form submissions will be saved but email delivery will not occur. This server only handles contact form submissions and does not include any bookstore functionality.');
 }
 
 app.use(cors());
