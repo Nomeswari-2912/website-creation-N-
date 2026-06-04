@@ -17,6 +17,8 @@ export default function Contact() {
 
   const apiBase = import.meta.env.VITE_API_BASE?.trim();
   const isProductionNoBackend = import.meta.env.PROD && !apiBase;
+  const isDevNoBackend = import.meta.env.DEV && !apiBase;
+  const isNoBackendMode = isProductionNoBackend || isDevNoBackend;
   const apiUrl = apiBase ? `${apiBase.replace(/\/$/, '')}/contact` : '/api/contact';
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -29,7 +31,7 @@ export default function Contact() {
     setError('');
     setSubmitting(true);
 
-    if (isProductionNoBackend) {
+    if (isNoBackendMode) {
       setSubmitted(true);
       setSuccessMessage('Message received successfully');
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
@@ -67,6 +69,8 @@ export default function Contact() {
         setError(
           apiBase
             ? 'Unable to reach the contact server. Make sure the backend is running and VITE_API_BASE is correct.'
+            : import.meta.env.DEV
+            ? 'Backend is not running locally. Start the server with `npm run server`.'
             : 'Contact API is not configured in production. Please configure a backend.'
         );
       } else {
@@ -89,6 +93,12 @@ export default function Contact() {
       title: 'Phone',
       value: '+91 12345 67890',
       link: 'tel:+911234567890',
+    },
+    {
+      icon: MapPin,
+      title: 'Location',
+      value: 'Bengaluru, India',
+      link: 'https://www.google.com/maps/search/?api=1&query=Bengaluru%2C%20India',
     },
   ];
 
@@ -262,6 +272,7 @@ export default function Contact() {
           </a>
         </div>
       </div>
+
     </section>
   );
 }

@@ -5,10 +5,9 @@ import Services from './components/Services';
 import Features from './components/Features';
 import About from './components/About';
 import Contact from './components/Contact';
-import BookStore from './components/BookStore';
 import Footer from './components/Footer';
 
-type PageType = 'home' | 'services' | 'about' | 'contact' | 'bookstore';
+type PageType = 'home' | 'services' | 'about' | 'contact';
 
 function AppContent() {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
@@ -21,8 +20,6 @@ function AppContent() {
         return <About />;
       case 'contact':
         return <Contact />;
-      case 'bookstore':
-        return <BookStore />;
       default:
         return (
           <>
