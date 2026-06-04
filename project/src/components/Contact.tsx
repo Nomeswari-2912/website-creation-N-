@@ -12,6 +12,8 @@ export default function Contact() {
 
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [showToast, setShowToast] = useState(false);
   const [error, setError] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -25,22 +27,41 @@ export default function Contact() {
     setSubmitting(true);
 
     try {
+      setError('');
+      setSuccessMessage('');
+
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
 
-      const result = await response.json();
+      const text = await response.text();
+      let result: { message?: string } = {};
+      try {
+        result = JSON.parse(text);
+      } catch {
+        result = { message: text || 'Unable to send your message.' };
+      }
+
       if (!response.ok) {
         throw new Error(result.message || 'Unable to send your message.');
       }
 
       setSubmitted(true);
+      setShowToast(true);
+      setSuccessMessage(result.message || 'Your information has been successfully submitted.');
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-      setTimeout(() => setSubmitted(false), 5000);
+      setTimeout(() => {
+        setSubmitted(false);
+        setShowToast(false);
+      }, 5000);
     } catch (err: any) {
-      setError(err.message || 'Unable to send your message. Please try again later.');
+      if (err instanceof TypeError || err.message?.includes('Failed to fetch')) {
+        setError('Unable to reach the contact server. Make sure the backend is running with `npm run server`.');
+      } else {
+        setError(err.message || 'Unable to send your message. Please try again later.');
+      }
     } finally {
       setSubmitting(false);
     }
@@ -69,6 +90,12 @@ export default function Contact() {
 
   return (
     <section className="pt-32 pb-20">
+      {showToast && (
+        <div className="fixed top-6 right-6 z-50 w-full max-w-sm rounded-2xl bg-emerald-600 px-5 py-4 shadow-2xl text-white animate-fade-in-right">
+          <p className="font-semibold">Your information has been successfully submitted.</p>
+          {successMessage && <p className="mt-1 text-sm text-emerald-100">{successMessage}</p>}
+        </div>
+      )}
       <div className="section-container">
         <div className="text-center space-y-4 mb-16 animate-fade-in">
           <h1 className="text-5xl lg:text-6xl font-bold text-slate-900">
@@ -122,7 +149,7 @@ export default function Contact() {
             {submitted && (
               <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
                 <p className="text-green-800 font-semibold">
-                  Thank you for your message! We'll get back to you soon.
+                  {successMessage || "Thank you for your message! We'll get back to you soon."}
                 </p>
               </div>
             )}
