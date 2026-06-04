@@ -22,7 +22,6 @@ export default function Footer({ onNavigate }: FooterProps) {
       'ZOHO CRM Implementation',
       'Content Development',
       'Quality Engineering',
-      'Book Store',
     ],
   };
 
