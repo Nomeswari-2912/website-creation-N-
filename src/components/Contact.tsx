@@ -14,6 +14,8 @@ export default function Contact() {
   const [submitting, setSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [showToast, setShowToast] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
   const [error, setError] = useState('');
 
   const apiBase = import.meta.env.VITE_API_BASE?.trim();
@@ -65,13 +67,12 @@ export default function Contact() {
       }
 
       setSubmitted(true);
-      setShowToast(true);
-      setSuccessMessage(result.message || 'Your information has been successfully submitted.');
+      setShowToast(false);
+      setShowModal(true);
+      const message = result.message || 'Your information has been successfully submitted.';
+      setSuccessMessage(message);
+      setModalMessage(message);
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-      setTimeout(() => {
-        setSubmitted(false);
-        setShowToast(false);
-      }, 5000);
     } catch (err: any) {
       if (err instanceof TypeError || err.message?.includes('Failed to fetch')) {
         setError(
@@ -110,6 +111,21 @@ export default function Contact() {
 
   return (
     <section className="pt-32 pb-20">
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4">
+          <div className="w-full max-w-lg rounded-3xl bg-white p-6 shadow-2xl ring-1 ring-slate-200">
+            <h2 className="text-2xl font-semibold text-slate-900 mb-3">Submission Received</h2>
+            <p className="text-slate-700 mb-6">{modalMessage}</p>
+            <button
+              type="button"
+              className="w-full rounded-full bg-blue-600 px-5 py-3 text-white font-semibold hover:bg-blue-700 transition"
+              onClick={() => setShowModal(false)}
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
       {showToast && (
         <div className="fixed top-6 right-6 z-50 w-full max-w-sm rounded-2xl bg-emerald-600 px-5 py-4 shadow-2xl text-white animate-fade-in-right">
           <p className="font-semibold">Your information has been successfully submitted.</p>
