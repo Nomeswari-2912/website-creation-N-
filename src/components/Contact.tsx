@@ -16,6 +16,10 @@ export default function Contact() {
   const [showToast, setShowToast] = useState(false);
   const [error, setError] = useState('');
 
+  const apiBase = import.meta.env.VITE_API_BASE?.trim();
+  const isProductionNoBackend = import.meta.env.PROD && !apiBase;
+  const apiUrl = apiBase ? `${apiBase.replace(/\/$/, '')}/contact` : '/api/contact';
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -26,11 +30,23 @@ export default function Contact() {
     setError('');
     setSubmitting(true);
 
+    if (isProductionNoBackend) {
+      const mailtoBody = `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\n${formData.message}`;
+      const mailtoLink = `mailto:info@nimbusgurus.in?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(mailtoBody)}`;
+      window.location.href = mailtoLink;
+
+      setSuccessMessage('Email client opened so you can send your message directly.');
+      setShowToast(true);
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      setSubmitting(false);
+      return;
+    }
+
     try {
       setError('');
       setSuccessMessage('');
 
-      const response = await fetch('/api/contact', {
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -58,7 +74,11 @@ export default function Contact() {
       }, 5000);
     } catch (err: any) {
       if (err instanceof TypeError || err.message?.includes('Failed to fetch')) {
-        setError('Unable to reach the contact server. Make sure the backend is running with `npm run server`.');
+        setError(
+          apiBase
+            ? 'Unable to reach the contact server. Make sure the backend is running and VITE_API_BASE is correct.'
+            : 'Contact API is not configured in production. Please use the email fallback or configure a backend.'
+        );
       } else {
         setError(err.message || 'Unable to send your message. Please try again later.');
       }
@@ -150,6 +170,14 @@ export default function Contact() {
               <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
                 <p className="text-green-800 font-semibold">
                   {successMessage || "Thank you for your message! We'll get back to you soon."}
+                </p>
+              </div>
+            )}
+
+            {isProductionNoBackend && (
+              <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <p className="text-yellow-800 font-semibold">
+                  Contact API is not configured for production. The form will open your email client instead.
                 </p>
               </div>
             )}
