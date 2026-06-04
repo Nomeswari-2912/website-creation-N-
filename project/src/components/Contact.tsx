@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
 import { useState } from 'react';
 
 export default function Contact() {
@@ -13,6 +13,7 @@ export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
   const [error, setError] = useState('');
 
   const apiBase = import.meta.env.VITE_API_BASE?.trim();
@@ -33,6 +34,7 @@ export default function Contact() {
 
     if (isNoBackendMode) {
       setSubmitted(true);
+      setShowPopup(true);
       setSuccessMessage('Message received successfully');
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
       setSubmitting(false);
@@ -62,6 +64,7 @@ export default function Contact() {
       }
 
       setSubmitted(true);
+      setShowPopup(true);
       setSuccessMessage('Message received successfully');
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
     } catch (err: any) {
@@ -154,7 +157,7 @@ export default function Contact() {
           </div>
 
           <div className="bg-white p-8 rounded-xl shadow-lg border border-slate-100 animate-slide-up">
-            {submitted && (
+            {submitted && !showPopup && (
               <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
                 <p className="text-green-800 font-semibold">
                   {successMessage || "Thank you for your message! We'll get back to you soon."}
@@ -271,6 +274,29 @@ export default function Contact() {
         </div>
       </div>
 
+      {showPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
+          <div className="w-full max-w-md rounded-3xl bg-white p-8 text-center shadow-2xl">
+            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+              <CheckCircle className="h-10 w-10" />
+            </div>
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">Thank You!</h2>
+            <p className="text-slate-600 mb-8">
+              {successMessage || 'Your details have been successfully submitted. Thanks!'}
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                setShowPopup(false);
+                setSubmitted(false);
+              }}
+              className="inline-flex items-center justify-center rounded-full bg-emerald-600 px-8 py-3 text-sm font-semibold text-white transition hover:bg-emerald-700"
+            >
+              Ok
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
