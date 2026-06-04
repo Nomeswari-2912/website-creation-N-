@@ -137,7 +137,7 @@ If you need to reach us directly, reply to this email or contact ${emailReceiver
       emailDeliveryConfigured: smtpConfigured,
       message: smtpConfigured
         ? 'Message received and email sent successfully.'
-        : 'Message received successfully. Email delivery is not configured yet. Please add SMTP settings to .env if you want emails delivered to the provided address.',
+        : 'Message received successfully.',
     });
   } catch (error) {
     console.error('Unable to store contact message:', error);

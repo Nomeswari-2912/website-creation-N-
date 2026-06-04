@@ -1,4 +1,4 @@
-import { Layers3, Menu, X, Home, Briefcase, Info, Mail } from 'lucide-react';
+import { Layers3, Menu, X, Home, Briefcase, Info, Mail, BookOpen } from 'lucide-react';
 import { useState } from 'react';
 
 interface NavigationProps {
@@ -14,6 +14,7 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
     { id: 'services', label: 'Our Services', Icon: Briefcase },
     { id: 'about', label: 'About Us', Icon: Info },
     { id: 'contact', label: 'Contact Us', Icon: Mail },
+    { id: 'bookstore', label: 'Book Store', Icon: BookOpen },
   ];
 
   const handleNavigate = (page: string) => {

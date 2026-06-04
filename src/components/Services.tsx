@@ -33,6 +33,13 @@ export default function Services() {
       description: 'Collaborating the World',
       details: 'Professional content creation services including technical documentation, copywriting, video production, and multimedia assets.',
     },
+    {
+      title: 'Book Store',
+      icon: BookOpen,
+      image: 'https://images.pexels.com/photos/590493/pexels-photo-590493.jpeg?auto=compress&cs=tinysrgb&w=600',
+      description: 'Browse books with ease',
+      details: 'Online bookstore experience with curated catalogs, easy ordering, and fast delivery.',
+    },
   ];
 
   const allServices = [
@@ -44,6 +51,7 @@ export default function Services() {
     { icon: PenTool, name: 'ZOHO CRM Implementation', details: 'Custom CRM setup, integration, and automation' },
     { icon: BookOpen, name: 'Content Development', details: 'Technical and creative content creation' },
     { icon: Code, name: 'Quality Engineering', details: 'QA testing, automation, and quality assurance' },
+    { icon: BookOpen, name: 'Book Store', details: 'Online book store catalog with easy browsing and ordering.' },
   ];
 
   return (

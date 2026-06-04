@@ -16,6 +16,8 @@ export default function Contact() {
   const [showToast, setShowToast] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
+  const [mailtoLink, setMailtoLink] = useState('');
+  const [isEmailFallback, setIsEmailFallback] = useState(false);
   const [error, setError] = useState('');
 
   const apiBase = import.meta.env.VITE_API_BASE?.trim();
@@ -34,11 +36,11 @@ export default function Contact() {
 
     if (isProductionNoBackend) {
       const mailtoBody = `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\n${formData.message}`;
-      const mailtoLink = `mailto:info@nimbusgurus.in?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(mailtoBody)}`;
-      window.location.href = mailtoLink;
-
-      setSuccessMessage('Email client opened so you can send your message directly.');
-      setShowToast(true);
+      const link = `mailto:info@nimbusgurus.in?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(mailtoBody)}`;
+      setMailtoLink(link);
+      setIsEmailFallback(true);
+      setModalMessage('Contact API is not configured for production. Click OK to open your email client.');
+      setShowModal(true);
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
       setSubmitting(false);
       return;
@@ -68,6 +70,7 @@ export default function Contact() {
 
       setSubmitted(true);
       setShowToast(false);
+      setIsEmailFallback(false);
       setShowModal(true);
       const message = result.message || 'Your information has been successfully submitted.';
       setSuccessMessage(message);
@@ -101,12 +104,6 @@ export default function Contact() {
       value: '+91 12345 67890',
       link: 'tel:+911234567890',
     },
-    {
-      icon: MapPin,
-      title: 'Location',
-      value: 'India',
-      link: 'https://www.google.com/maps/search/India',
-    },
   ];
 
   return (
@@ -119,7 +116,14 @@ export default function Contact() {
             <button
               type="button"
               className="w-full rounded-full bg-blue-600 px-5 py-3 text-white font-semibold hover:bg-blue-700 transition"
-              onClick={() => setShowModal(false)}
+              onClick={() => {
+                setShowModal(false);
+                if (isEmailFallback && mailtoLink) {
+                  window.location.href = mailtoLink;
+                  setMailtoLink('');
+                  setIsEmailFallback(false);
+                }
+              }}
             >
               OK
             </button>

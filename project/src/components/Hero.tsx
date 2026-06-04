@@ -50,9 +50,9 @@ export default function Hero({ onServicesClick }: HeroProps) {
             <div className="relative bg-gradient-to-br from-blue-600 via-blue-500 to-teal-500 rounded-3xl h-full flex items-center justify-center overflow-hidden shadow-2xl">
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center text-white space-y-6">
-                  <div className="text-8xl animate-bounce">🚀</div>
-                  <h3 className="text-4xl font-bold">Digital Innovation</h3>
-                  <p className="text-blue-100 text-lg font-semibold">Powering the digital future...</p>
+                    <div className="text-8xl animate-bounce">🚀</div>
+                    <h3 className="text-4xl font-bold">Digital Innovation</h3>
+                    <p className="text-blue-100 text-lg font-semibold">Powering the digital future...</p>
                 </div>
               </div>
               <svg className="absolute w-full h-full opacity-20" viewBox="0 0 400 400">
