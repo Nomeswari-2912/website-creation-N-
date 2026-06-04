@@ -30,12 +30,7 @@ export default function Contact() {
     setSubmitting(true);
 
     if (isProductionNoBackend) {
-      const mailtoBody = `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\n${formData.message}`;
-      const link = `mailto:info@nimbusgurus.in?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(mailtoBody)}`;
-      window.location.href = link;
-      setSubmitted(true);
-      setSuccessMessage('Your message has been submitted successfully');
-      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      setError('Contact API is not configured in production. Please configure a backend before sending messages.');
       setSubmitting(false);
       return;
     }
@@ -70,7 +65,7 @@ export default function Contact() {
         setError(
           apiBase
             ? 'Unable to reach the contact server. Make sure the backend is running and VITE_API_BASE is correct.'
-            : 'Contact API is not configured in production. Please use the email fallback or configure a backend.'
+            : 'Contact API is not configured in production. Please configure a backend.'
         );
       } else {
         setError(err.message || 'Unable to send your message. Please try again later.');
@@ -158,7 +153,7 @@ export default function Contact() {
             {isProductionNoBackend && (
               <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
                 <p className="text-yellow-800 font-semibold">
-                  Contact API is not configured for production. The form will open your email client instead.
+                  Contact API is not configured for production. Please configure a backend before sending messages.
                 </p>
               </div>
             )}
