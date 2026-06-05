@@ -100,8 +100,8 @@ export default function Contact() {
     {
       icon: MapPin,
       title: 'Location',
-      value: 'Bengaluru, India',
-      link: 'https://www.google.com/maps/search/?api=1&query=Bengaluru%2C%20India',
+      value: 'Delhi Public School, Coimbatore, India',
+      link: 'https://www.google.com/maps/search/?api=1&query=Delhi%20Public%20School%20Coimbatore%2C%20India',
     },
   ];
 
