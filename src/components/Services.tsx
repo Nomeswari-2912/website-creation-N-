@@ -155,6 +155,18 @@ export default function Services() {
                 <p className="text-slate-600 mb-4">
                   {selectedService.details || 'Professional service tailored to your needs.'}
                 </p>
+                {selectedService.link && (
+                  <div className="mb-4">
+                    <a
+                      href={selectedService.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:text-blue-700 font-semibold cursor-pointer"
+                    >
+                      {selectedService.linkLabel || selectedService.link}
+                    </a>
+                  </div>
+                )}
                 <button
                   onClick={() => setSelectedService(null)}
                   className="w-full bg-blue-600 text-white font-bold py-2 rounded-lg hover:bg-blue-700 transition-colors"
