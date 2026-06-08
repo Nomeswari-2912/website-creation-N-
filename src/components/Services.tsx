@@ -33,7 +33,7 @@ export default function Services() {
       description: 'Launch Your Next Big Idea',
       details: 'Strategic product launch support, go-to-market planning, and technology acceleration to help startups and initiatives scale fast.',
       link: 'https://share.google/QxAPWHjVG2r7GHHhu',
-      linkLabel: 'HerSpringboard',
+      linkLabel: 'https://share.google/QxAPWHjVG2r7GHHhu',
     },
     {
       title: 'Content Development',
