@@ -42,6 +42,22 @@ export default function Services() {
       description: 'Collaborating the World',
       details: 'Professional content creation services including technical documentation, copywriting, video production, and multimedia assets.',
     },
+    {
+      title: 'HER Springboard',
+      icon: BookOpen,
+      image: 'https://images.pexels.com/photos/3769714/pexels-photo-3769714.jpeg?auto=compress&cs=tinysrgb&w=600',
+      description: 'Empowering Women in Tech',
+      details: 'HER Springboard | Herspringboard.in https://share.google/QxAPWHjVG2r7GHHhu',
+      link: 'https://share.google/QxAPWHjVG2r7GHHhu',
+    },
+    {
+      title: 'Springboard',
+      icon: BookOpen,
+      image: 'https://images.pexels.com/photos/3769714/pexels-photo-3769714.jpeg?auto=compress&cs=tinysrgb&w=600',
+      description: 'Professional Career Advancement',
+      details: 'HER Springboard | Herspringboard.in https://share.google/QxAPWHjVG2r7GHHhu',
+      link: 'https://share.google/QxAPWHjVG2r7GHHhu',
+    },
   ];
 
   const allServices = [
@@ -53,6 +69,8 @@ export default function Services() {
     { icon: PenTool, name: 'ZOHO CRM Implementation', details: 'Custom CRM setup, integration, and automation' },
     { icon: BookOpen, name: 'Content Development', details: 'Technical and creative content creation' },
     { icon: Code, name: 'Quality Engineering', details: 'QA testing, automation, and quality assurance' },
+    { icon: BookOpen, name: 'HER Springboard', details: 'Empowering women in tech', link: 'https://share.google/QxAPWHjVG2r7GHHhu' },
+    { icon: BookOpen, name: 'Springboard', details: 'Professional career advancement and resources', link: 'https://share.google/QxAPWHjVG2r7GHHhu' },
   ];
 
   return (
@@ -77,7 +95,7 @@ export default function Services() {
               return (
                 <div
                   key={index}
-                  onClick={() => setSelectedService(service)}
+                  onClick={() => service.link ? window.open(service.link, '_blank') : setSelectedService(service)}
                   className="group cursor-pointer animate-slide-up"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
@@ -113,7 +131,7 @@ export default function Services() {
               return (
                 <div
                   key={index}
-                  onClick={() => setSelectedService(service)}
+                  onClick={() => service.link ? window.open(service.link, '_blank') : setSelectedService(service)}
                   className="flex items-center gap-3 p-4 bg-white rounded-lg hover:shadow-md transition-shadow animate-slide-up cursor-pointer hover:bg-blue-50"
                   style={{ animationDelay: `${index * 0.05}s` }}
                 >
@@ -127,7 +145,7 @@ export default function Services() {
 
         {selectedService && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full animate-fade-in">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full animate-fade-in">
               <div className="flex items-start justify-between p-6 border-b border-slate-200">
                 <div className="flex items-center gap-3">
                   {selectedService.icon && (
@@ -152,18 +170,30 @@ export default function Services() {
                     className="w-full h-40 object-cover rounded-lg mb-4"
                   />
                 )}
-                <p className="text-slate-600 mb-4">
+                <p className="text-slate-600 mb-4 break-all text-base whitespace-normal">
                   {selectedService.details || 'Professional service tailored to your needs.'}
                 </p>
+<<<<<<< HEAD
                 {selectedService.link && (
                   <div className="mb-4">
+=======
+                {selectedService.link && selectedService.title !== 'HER Springboard' && (
+                  <div className="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                    <p className="text-sm font-semibold text-slate-700 mb-2">Visit Link:</p>
+>>>>>>> agents/correct-swift
                     <a
                       href={selectedService.link}
                       target="_blank"
                       rel="noopener noreferrer"
+<<<<<<< HEAD
                       className="text-blue-600 hover:text-blue-700 font-semibold cursor-pointer"
                     >
                       {selectedService.linkLabel || selectedService.link}
+=======
+                      className="text-blue-600 hover:text-blue-800 font-semibold break-all text-sm underline"
+                    >
+                      {selectedService.link}
+>>>>>>> agents/correct-swift
                     </a>
                   </div>
                 )}
