@@ -32,8 +32,8 @@ export default function Services() {
       image: 'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=600',
       description: 'Launch Your Next Big Idea',
       details: 'Strategic product launch support, go-to-market planning, and technology acceleration to help startups and initiatives scale fast.',
-      link: 'https://share.google/QxAPWHjVG2r7GHHhu',
-      linkLabel: 'https://share.google/QxAPWHjVG2r7GHHhu',
+      link: ' Herspringboard.in https://share.google/QxAPWHjVG2r7GHHhu',
+      linkLabel: 'Herspringboard.in https://share.google/QxAPWHjVG2r7GHHhu',
     },
     {
       title: 'Content Development',
